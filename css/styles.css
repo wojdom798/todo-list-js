@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -6,9 +6,67 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   min-height: 100vh;
-  background-color: #fbfbfb;
-  font-family: "Comic Neue", cursive;
+  background-color: #eeeef9;
+  font-family: "Open Sans", sans-serif;
+}
+
+.todo-container {
+  padding: 0 7px;
+  position: relative;
+  width: 40%;
+  background-color: #fff;
+  border: 1px solid #aaa;
+}
+.todo-container .add-todo-container {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #ff2828, #e20000);
+  box-shadow: 2px 2px 5px #888;
+  cursor: pointer;
+  transition: transform 0.115s linear;
+}
+.todo-container .add-todo-container:hover {
+  transform: scale(1.3);
+}
+.todo-container .add-todo-container button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  outline: none;
+  border: none;
+  color: #fff;
+  cursor: inherit;
+}
+.todo-container .add-todo-container button .fa-plus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.9rem;
+}
+.todo-container .todo-item {
+  padding: 7px 0;
+  border-bottom: 1px dashed #999;
+  cursor: pointer;
+  text-decoration: none;
+  transition: text-decoration 0.3s linear;
+}
+.todo-container .todo-item:last-of-type {
+  border-bottom: none;
+}
+.todo-container .todo-item:hover {
+  text-decoration: line-through;
 }
 
 /*# sourceMappingURL=styles.css.map */
