@@ -45,19 +45,15 @@ function TodoList(containerId: string) {
   };
 
   this.deleteTodo = function(ev) {
-    // bug
     let tmpElem = ev.target;
     while (!tmpElem.hasAttribute("todo-id")) {
       tmpElem = tmpElem.parentNode;
     }
     let index = parseInt(tmpElem.getAttribute("todo-id"));
-    console.log("removing item: " + this.todoList[index] + " at id: " + index.toString());
-    this.todoList = this.todoList.filter((item, id) => {
-      return id !== index;
+    this.todoList = this.todoList.filter(item => {
+      return item !== tmpElem.textContent;
     });
     tmpElem.remove();
-
-    console.log(this.todoList);
   };
 
   this.saveTodo = function(ev) {
@@ -85,8 +81,6 @@ function TodoList(containerId: string) {
     this.inputField.value = "";
     this.isModalOpen = false;
     this.modal.classList.remove("active");
-
-    console.log(this.todoList);
   };
 
   this.closeModal = function() {
@@ -102,6 +96,8 @@ function TodoList(containerId: string) {
     modalContents.classList.add("add-todo-container");
 
     let header = document.createElement("h3");
+    header.textContent = "Add New Todo Item";
+
     let form = document.createElement("form");
 
     this.inputField = document.createElement("input");
