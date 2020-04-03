@@ -4,6 +4,7 @@ function TodoList(containerId) {
     this.todoList = [];
     this.modal = null;
     this.isModalOpen = false;
+    this.inputField = null;
     this.createList = function () {
         var fragmentContainer = new DocumentFragment();
         this.todoList.forEach(function (item) {
@@ -34,7 +35,41 @@ function TodoList(containerId) {
             this.isModalOpen = true;
         }
     };
-    this.deleteTodo = function (index) {
+    this.deleteTodo = function (ev) {
+        var tmpElem = ev.target;
+        while (!tmpElem.hasAttribute("todo-id")) {
+            tmpElem = tmpElem.parentNode;
+        }
+        var index = parseInt(tmpElem.getAttribute("todo-id"));
+        console.log("removing item: " + this.todoList[index] + " at id: " + index.toString());
+        this.todoList = this.todoList.filter(function (item, id) {
+            return id !== index;
+        });
+        tmpElem.remove();
+        console.log(this.todoList);
+    };
+    this.saveTodo = function (ev) {
+        if ((ev.type === "keypress") && (ev.keyCode === 13)) {
+            ev.preventDefault();
+        }
+        else if ((ev.type === "keypress") && (ev.keyCode !== 13)) {
+            return;
+        }
+        if (this.inputField.value !== "") {
+            this.todoList.push(this.inputField.value);
+            var wrapper = document.createElement("div");
+            wrapper.classList.add("todo-item");
+            wrapper.setAttribute("todo-id", (this.todoList.length - 1).toString());
+            wrapper.addEventListener("click", this.deleteTodo.bind(this));
+            var paragraph = document.createElement("p");
+            paragraph.textContent = this.inputField.value;
+            wrapper.appendChild(paragraph);
+            this.todoContainer.appendChild(wrapper);
+        }
+        this.inputField.value = "";
+        this.isModalOpen = false;
+        this.modal.classList.remove("active");
+        console.log(this.todoList);
     };
     this.closeModal = function () {
         this.isModalOpen = false;
@@ -47,14 +82,16 @@ function TodoList(containerId) {
         modalContents.classList.add("add-todo-container");
         var header = document.createElement("h3");
         var form = document.createElement("form");
-        var txtInput = document.createElement("input");
-        txtInput.setAttribute("type", "text");
-        txtInput.setAttribute("name", "todo-input");
+        this.inputField = document.createElement("input");
+        this.inputField.setAttribute("type", "text");
+        this.inputField.setAttribute("name", "todo-input");
+        this.inputField.addEventListener("keypress", this.saveTodo.bind(this));
         var wrapper = document.createElement("div");
         var saveBtn = document.createElement("button");
         saveBtn.setAttribute("type", "button");
         saveBtn.setAttribute("name", "save-btn");
         saveBtn.textContent = "save";
+        saveBtn.addEventListener("click", this.saveTodo.bind(this));
         var closeBtn = document.createElement("button");
         closeBtn.setAttribute("type", "button");
         closeBtn.setAttribute("name", "close-btn");
@@ -64,7 +101,7 @@ function TodoList(containerId) {
         closeBtn.addEventListener("click", this.closeModal.bind(this));
         wrapper.appendChild(saveBtn);
         wrapper.appendChild(closeBtn);
-        form.appendChild(txtInput);
+        form.appendChild(this.inputField);
         form.appendChild(wrapper);
         form.appendChild(wrapper);
         modalContents.appendChild(header);
