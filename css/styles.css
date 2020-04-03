@@ -24,7 +24,7 @@ body {
 }
 .todo-container .add-todo-container {
   position: absolute;
-  top: -15px;
+  bottom: -15px;
   right: -15px;
   width: 30px;
   height: 30px;
@@ -60,13 +60,14 @@ body {
   border-bottom: 1px dashed #999;
   cursor: pointer;
   text-decoration: none;
-  transition: text-decoration 0.3s linear;
 }
 .todo-container .todo-item:last-of-type {
   border-bottom: none;
 }
 .todo-container .todo-item:hover {
   text-decoration: line-through;
+  text-decoration-color: #ff2828;
+  text-decoration-thickness: 2px;
 }
 
 /*# sourceMappingURL=styles.css.map */
